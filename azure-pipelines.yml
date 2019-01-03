@@ -13,9 +13,13 @@ steps:
       gradleWrapperFile: 'gradlew'
       gradleOptions: '-Xmx3072m'
       javaHomeOption: 'JDKVersion'
-      jdkVersionOption: '1.10'
+      jdkVersionOption: '1.8'
       jdkArchitectureOption: 'x64'
       publishJUnitResults: false
       testResultsFiles: '**/TEST-*.xml'
       options: '--no-daemon --stacktrace'
-      tasks: 'build'
+      tasks: 'build jacocoTestReport'
+  - task: Bash@3
+    inputs:
+      targetType: inline
+      script: bash <(curl -s https://codecov.io/bash) -t f0e8b84f-6d09-4b00-8a77-021f50f52a1a

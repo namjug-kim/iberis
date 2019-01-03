@@ -10,6 +10,7 @@ plugins {
     kotlin("jvm") version "1.2.51"
     id("com.google.protobuf") version "0.8.6"
     id("org.springframework.boot") version "2.0.5.RELEASE"
+    jacoco
 }
 
 group = "com.njkim"
@@ -17,6 +18,12 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
+}
+
+tasks.withType<JacocoReport> {
+    reports {
+        xml.isEnabled = true
+    }
 }
 
 dependencies {
@@ -75,6 +82,7 @@ java.sourceSets {
         }
     }
 }
+
 
 protobuf.protobuf.run {
     protoc(delegateClosureOf<ExecutableLocator> {
