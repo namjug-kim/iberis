@@ -1,0 +1,11 @@
+spring.output.ansi.enabled: always
+spring.banner.location: banner
+server.port: 0
+
+logging.level.com: ERROR
+logging.level.org: ERROR
+logging.level.com.njkim: INFO
+
+logging:
+  pattern:
+    console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(-){faint} %clr(%-20.20logger{0}){cyan} %clr(:){faint} %m%n"

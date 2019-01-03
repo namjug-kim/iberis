@@ -1,0 +1,15 @@
+syntax = "proto3";
+package proto.protocol;
+
+import "Protocol.proto";
+
+option java_package = "com.iberis.protocol";
+
+message BlockHeight {
+    int32 blockHeight = 1;
+}
+
+service BlockService {
+    rpc getBlock (BlockHeight) returns (PBlock) {
+    }
+}

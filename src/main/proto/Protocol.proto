@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+import "Contract.proto";
+
+package proto.protocol;
+
+option java_package = "com.iberis.protocol";
+
+message PAccount {
+    bytes publicKey = 1;
+    int64 balance = 2;
+    int64 nonce = 3;
+}
+
+message PBlockProducer {
+    string host = 1;
+    int32 port = 2;
+    bytes publicKey = 3;
+}
+
+message PBlockHeader {
+    int64 version = 1;
+    bytes prevBlockHash = 2;
+    int64 time = 3;
+    bytes merkleTreeHash = 4;
+}
+
+message PTransaction {
+    int64 nonce = 1;
+    bytes sender = 2;
+    bytes signature = 3;
+
+    ContractType contractType = 4;
+    bytes contract = 5;
+}
+
+message PBlock {
+    bytes blockHash = 1;
+    PBlockHeader blockHeader = 2;
+    repeated PTransaction transactions = 3;
+    bytes blockProducerAddress = 4;
+    bytes blockProducerSignature = 5;
+}
+
+message PCommitBlock {
+    PBlock block = 1;
+    bytes witnessAddress = 2;
+    bytes witnessSignature = 3;
+}
+
+message Empty {
+}

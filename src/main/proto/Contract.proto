@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package proto.protocol;
+
+option java_package = "com.iberis.protocol";
+option java_outer_classname = "ContractProtocol";
+
+enum ContractType {
+    BlockProduceRewardContract = 0;
+    AddBlockProducerContract = 1;
+    TransferContract = 2;
+}
+
+message PTransferContract {
+    bytes sender = 1;
+    bytes to = 2;
+    int64 amount = 3;
+}
+
+message PBlockProduceRewardContract {
+    bytes sender = 1;
+    int64 amount = 2;
+}
+
+message PAddBlockProducerContract {
+    bytes sender = 1;
+}
