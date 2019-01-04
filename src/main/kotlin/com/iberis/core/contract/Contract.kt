@@ -2,6 +2,7 @@ package com.iberis.core.contract
 
 import com.iberis.core.contract.executor.ContractHandler
 import com.iberis.db.DatabaseService
+import com.iberis.protocol.ContractProtocol
 import java.security.PublicKey
 
 /**
@@ -20,5 +21,5 @@ interface Contract {
 
     fun rawData(): ByteArray
 
-    fun contractType(): com.iberis.protocol.ContractProtocol.ContractType
+    fun contractType(): ContractProtocol.ContractType
 }

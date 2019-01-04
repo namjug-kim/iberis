@@ -6,6 +6,7 @@ import com.iberis.core.contract.executor.AddBlockProducerContractHandler
 import com.iberis.core.contract.executor.ContractHandler
 import com.iberis.crypto.decodePublicKey
 import com.iberis.db.DatabaseService
+import com.iberis.protocol.ContractProtocol
 import com.iberis.util.createAddress
 import java.security.PublicKey
 
@@ -18,14 +19,14 @@ import java.security.PublicKey
  * @since 2018-10-11
  * @version 0.1
  */
-data class AddBlockProducerContract(val from: PublicKey) : BaseContract(from, com.iberis.protocol.ContractProtocol.ContractType.AddBlockProducerContract), ProtobufModel<com.iberis.protocol.ContractProtocol.PAddBlockProducerContract> {
+data class AddBlockProducerContract(val from: PublicKey) : BaseContract(from, ContractProtocol.ContractType.AddBlockProducerContract), ProtobufModel<ContractProtocol.PAddBlockProducerContract> {
     companion object {
         fun parseFrom(rawData: ByteArray): AddBlockProducerContract {
-            val parsedData = com.iberis.protocol.ContractProtocol.PAddBlockProducerContract.parseFrom(rawData)
+            val parsedData = ContractProtocol.PAddBlockProducerContract.parseFrom(rawData)
             return parseFrom(parsedData)
         }
 
-        fun parseFrom(fromModel: com.iberis.protocol.ContractProtocol.PAddBlockProducerContract): AddBlockProducerContract {
+        fun parseFrom(fromModel: ContractProtocol.PAddBlockProducerContract): AddBlockProducerContract {
             return AddBlockProducerContract(
                     from = fromModel.sender.toByteArray().decodePublicKey()
             )
@@ -40,8 +41,8 @@ data class AddBlockProducerContract(val from: PublicKey) : BaseContract(from, co
         return toProtobuf().toByteArray()
     }
 
-    override fun toProtobuf(): com.iberis.protocol.ContractProtocol.PAddBlockProducerContract {
-        return com.iberis.protocol.ContractProtocol.PAddBlockProducerContract.newBuilder()
+    override fun toProtobuf(): ContractProtocol.PAddBlockProducerContract {
+        return ContractProtocol.PAddBlockProducerContract.newBuilder()
                 .setSender(ByteString.copyFrom(from.encoded))
                 .build()
     }

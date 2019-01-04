@@ -5,6 +5,7 @@ import com.iberis.common.ProtobufModel
 import com.iberis.core.merkletree.MerkleTree
 import com.iberis.core.transaction.Transaction
 import com.iberis.crypto.Hash
+import com.iberis.protocol.Protocol
 import com.iberis.util.writeUint32
 import java.io.ByteArrayOutputStream
 
@@ -20,7 +21,7 @@ import java.io.ByteArrayOutputStream
 class BlockHeader(val version: Long,
                   var prevBlockHash: Hash,
                   val time: Long,
-                  var merkleTreeHash: Hash) : ProtobufModel<com.iberis.protocol.Protocol.PBlockHeader> {
+                  var merkleTreeHash: Hash) : ProtobufModel<Protocol.PBlockHeader> {
 
     companion object {
         fun buildMerkleTree(transactions: List<Transaction>): Hash {
@@ -32,11 +33,11 @@ class BlockHeader(val version: Long,
         }
 
         fun parseFrom(rawData: ByteArray): BlockHeader {
-            val parsedData = com.iberis.protocol.Protocol.PBlockHeader.parseFrom(rawData)
+            val parsedData = Protocol.PBlockHeader.parseFrom(rawData)
             return parseFrom(parsedData)
         }
 
-        fun parseFrom(fromModel: com.iberis.protocol.Protocol.PBlockHeader): BlockHeader {
+        fun parseFrom(fromModel: Protocol.PBlockHeader): BlockHeader {
             return BlockHeader(
                     version = fromModel.version,
                     prevBlockHash = Hash.ByteWrapper(fromModel.prevBlockHash.toByteArray()).build(),
@@ -46,8 +47,8 @@ class BlockHeader(val version: Long,
         }
     }
 
-    override fun toProtobuf(): com.iberis.protocol.Protocol.PBlockHeader {
-        return com.iberis.protocol.Protocol.PBlockHeader.newBuilder()
+    override fun toProtobuf(): Protocol.PBlockHeader {
+        return Protocol.PBlockHeader.newBuilder()
                 .setMerkleTreeHash(ByteString.copyFrom(merkleTreeHash.bytes))
                 .setPrevBlockHash(ByteString.copyFrom(prevBlockHash.bytes))
                 .setTime(time)

@@ -7,6 +7,7 @@ import com.iberis.crypto.Hash
 import com.iberis.crypto.decodePublicKey
 import com.iberis.crypto.signing
 import com.iberis.crypto.verifySigning
+import com.iberis.protocol.Protocol
 import java.security.PrivateKey
 import java.security.PublicKey
 
@@ -23,15 +24,15 @@ data class Block(val blockHeader: BlockHeader,
                  val blockHash: Hash = blockHeader.calculateBlockHash(),
                  val transactions: List<Transaction>,
                  val blockProducerAddress: PublicKey,
-                 val blockProducerSignature: ByteArray) : ProtobufModel<com.iberis.protocol.Protocol.PBlock> {
+                 val blockProducerSignature: ByteArray) : ProtobufModel<Protocol.PBlock> {
 
     companion object {
         fun parseFrom(rawData: ByteArray): Block {
-            val parsedData = com.iberis.protocol.Protocol.PBlock.parseFrom(rawData)
+            val parsedData = Protocol.PBlock.parseFrom(rawData)
             return parseFrom(parsedData)
         }
 
-        fun parseFrom(fromModel: com.iberis.protocol.Protocol.PBlock): Block {
+        fun parseFrom(fromModel: Protocol.PBlock): Block {
             return Block(
                     blockHash = Hash.ByteWrapper(fromModel.blockHash.toByteArray()).build(),
                     blockHeader = BlockHeader.parseFrom(fromModel.blockHeader),
@@ -47,8 +48,8 @@ data class Block(val blockHeader: BlockHeader,
         }
     }
 
-    override fun toProtobuf(): com.iberis.protocol.Protocol.PBlock {
-        return com.iberis.protocol.Protocol.PBlock.newBuilder()
+    override fun toProtobuf(): Protocol.PBlock {
+        return Protocol.PBlock.newBuilder()
                 .setBlockProducerAddress(ByteString.copyFrom(blockProducerAddress.encoded))
                 .setBlockProducerSignature(ByteString.copyFrom(blockProducerSignature))
                 .setBlockHash(ByteString.copyFrom(blockHash.bytes))

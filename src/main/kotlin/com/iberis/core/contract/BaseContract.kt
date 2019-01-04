@@ -1,5 +1,6 @@
 package com.iberis.core.contract
 
+import com.iberis.protocol.ContractProtocol
 import java.security.PublicKey
 
 /**
@@ -11,12 +12,12 @@ import java.security.PublicKey
  * @since 2018-10-11
  * @version 0.1
  */
-abstract class BaseContract(val sender: PublicKey, private val contractType: com.iberis.protocol.ContractProtocol.ContractType) : Contract {
+abstract class BaseContract(val sender: PublicKey, private val contractType: ContractProtocol.ContractType) : Contract {
     final override fun getOwner(): PublicKey {
         return sender
     }
 
-    override fun contractType(): com.iberis.protocol.ContractProtocol.ContractType {
+    override fun contractType(): ContractProtocol.ContractType {
         return contractType
     }
 }

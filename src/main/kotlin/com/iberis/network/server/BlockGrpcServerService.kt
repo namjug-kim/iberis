@@ -1,7 +1,9 @@
 package com.iberis.network.server
 
 import com.iberis.core.block.BlockService
+import com.iberis.protocol.Api
 import com.iberis.protocol.BlockServiceGrpc
+import com.iberis.protocol.Protocol
 import io.grpc.stub.StreamObserver
 
 /**
@@ -15,7 +17,7 @@ import io.grpc.stub.StreamObserver
  */
 class BlockGrpcServerService(private val blockService: BlockService) : BlockServiceGrpc.BlockServiceImplBase() {
 
-    override fun getBlock(request: com.iberis.protocol.Api.BlockHeight?, responseObserver: StreamObserver<com.iberis.protocol.Protocol.PBlock>?) {
+    override fun getBlock(request: Api.BlockHeight?, responseObserver: StreamObserver<Protocol.PBlock>?) {
         request ?: throw IllegalArgumentException()
         responseObserver ?: throw IllegalArgumentException()
 

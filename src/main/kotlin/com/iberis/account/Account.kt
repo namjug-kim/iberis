@@ -5,6 +5,7 @@ import com.iberis.common.Coin
 import com.iberis.common.ProtobufModel
 import com.iberis.crypto.SigningCrypto
 import com.iberis.crypto.decodePublicKey
+import com.iberis.protocol.Protocol
 import java.security.PrivateKey
 import java.security.PublicKey
 
@@ -21,7 +22,7 @@ import java.security.PublicKey
 data class Account(val privateKey: PrivateKey?,
                    val publicKey: PublicKey,
                    var nonce: Long,
-                   var balance: Coin) : ProtobufModel<com.iberis.protocol.Protocol.PAccount> {
+                   var balance: Coin) : ProtobufModel<Protocol.PAccount> {
     val accountId: AccountId = AccountId(publicKey)
 
     companion object {
@@ -36,7 +37,7 @@ data class Account(val privateKey: PrivateKey?,
             return Account(null, publicKey, 0, Coin(0))
         }
 
-        fun parseFrom(fromModel: com.iberis.protocol.Protocol.PAccount): Account {
+        fun parseFrom(fromModel: Protocol.PAccount): Account {
             return Account(
                     privateKey = null,
                     publicKey = fromModel.publicKey.toByteArray().decodePublicKey(),
@@ -46,13 +47,13 @@ data class Account(val privateKey: PrivateKey?,
         }
 
         fun parseFrom(rawData: ByteArray): Account {
-            val parseFrom = com.iberis.protocol.Protocol.PAccount.parseFrom(rawData)
+            val parseFrom = Protocol.PAccount.parseFrom(rawData)
             return parseFrom(parseFrom)
         }
     }
 
-    override fun toProtobuf(): com.iberis.protocol.Protocol.PAccount {
-        return com.iberis.protocol.Protocol.PAccount.newBuilder()
+    override fun toProtobuf(): Protocol.PAccount {
+        return Protocol.PAccount.newBuilder()
                 .setPublicKey(ByteString.copyFrom(publicKey.encoded))
                 .setBalance(balance.value)
                 .setNonce(nonce)

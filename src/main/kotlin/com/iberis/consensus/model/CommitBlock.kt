@@ -6,6 +6,7 @@ import com.iberis.core.block.Block
 import com.iberis.crypto.decodePublicKey
 import com.iberis.crypto.signing
 import com.iberis.crypto.verifySigning
+import com.iberis.protocol.Protocol
 import java.security.PrivateKey
 import java.security.PublicKey
 
@@ -20,14 +21,14 @@ import java.security.PublicKey
  */
 class CommitBlock(val witnessSignature: ByteArray,
                   val witness: PublicKey,
-                  val block: Block) : ProtobufModel<com.iberis.protocol.Protocol.PCommitBlock> {
+                  val block: Block) : ProtobufModel<Protocol.PCommitBlock> {
     companion object {
         fun parseFrom(rawData: ByteArray): CommitBlock {
-            val parsedData = com.iberis.protocol.Protocol.PCommitBlock.parseFrom(rawData)
+            val parsedData = Protocol.PCommitBlock.parseFrom(rawData)
             return parseFrom(parsedData)
         }
 
-        fun parseFrom(fromModel: com.iberis.protocol.Protocol.PCommitBlock): CommitBlock {
+        fun parseFrom(fromModel: Protocol.PCommitBlock): CommitBlock {
             return CommitBlock(
                     witnessSignature = fromModel.witnessSignature.toByteArray(),
                     witness = fromModel.witnessAddress.toByteArray().decodePublicKey(),
@@ -41,8 +42,8 @@ class CommitBlock(val witnessSignature: ByteArray,
         }
     }
 
-    override fun toProtobuf(): com.iberis.protocol.Protocol.PCommitBlock {
-        return com.iberis.protocol.Protocol.PCommitBlock.newBuilder()
+    override fun toProtobuf(): Protocol.PCommitBlock {
+        return Protocol.PCommitBlock.newBuilder()
                 .setWitnessAddress(ByteString.copyFrom(witness.encoded))
                 .setWitnessSignature(ByteString.copyFrom(witnessSignature))
                 .setBlock(block.toProtobuf())

@@ -7,6 +7,7 @@ import com.iberis.core.contract.executor.ContractHandler
 import com.iberis.core.contract.executor.TransferContractHandler
 import com.iberis.crypto.decodePublicKey
 import com.iberis.db.DatabaseService
+import com.iberis.protocol.ContractProtocol
 import com.iberis.util.createAddress
 import java.security.PublicKey
 
@@ -21,14 +22,14 @@ import java.security.PublicKey
  */
 data class TransferContract(val from: PublicKey,
                             val to: PublicKey,
-                            val amount: Coin) : BaseContract(from, com.iberis.protocol.ContractProtocol.ContractType.TransferContract), ProtobufModel<com.iberis.protocol.ContractProtocol.PTransferContract> {
+                            val amount: Coin) : BaseContract(from, ContractProtocol.ContractType.TransferContract), ProtobufModel<ContractProtocol.PTransferContract> {
     companion object {
         fun parseFrom(rawData: ByteArray): TransferContract {
-            val parsedData = com.iberis.protocol.ContractProtocol.PTransferContract.parseFrom(rawData)
+            val parsedData = ContractProtocol.PTransferContract.parseFrom(rawData)
             return parseFrom(parsedData)
         }
 
-        fun parseFrom(fromModel: com.iberis.protocol.ContractProtocol.PTransferContract): TransferContract {
+        fun parseFrom(fromModel: ContractProtocol.PTransferContract): TransferContract {
             return TransferContract(
                     from = fromModel.sender.toByteArray().decodePublicKey(),
                     to = fromModel.to.toByteArray().decodePublicKey(),
@@ -45,8 +46,8 @@ data class TransferContract(val from: PublicKey,
         return toProtobuf().toByteArray()
     }
 
-    override fun toProtobuf(): com.iberis.protocol.ContractProtocol.PTransferContract {
-        return com.iberis.protocol.ContractProtocol.PTransferContract.newBuilder()
+    override fun toProtobuf(): ContractProtocol.PTransferContract {
+        return ContractProtocol.PTransferContract.newBuilder()
                 .setSender(ByteString.copyFrom(from.encoded))
                 .setTo(ByteString.copyFrom(to.encoded))
                 .setAmount(amount.value)

@@ -10,6 +10,8 @@ import com.iberis.crypto.Hash
 import com.iberis.crypto.decodePublicKey
 import com.iberis.crypto.signing
 import com.iberis.crypto.verifySigning
+import com.iberis.protocol.ContractProtocol
+import com.iberis.protocol.Protocol
 import com.iberis.util.writeUint32
 import java.io.ByteArrayOutputStream
 import java.security.PrivateKey
@@ -28,8 +30,8 @@ import java.security.PublicKey
 class Transaction(val nonce: Long,
                   val sender: PublicKey,
                   val signature: ByteArray,
-                  val contractType: com.iberis.protocol.ContractProtocol.ContractType,
-                  val contract: Contract) : ProtobufModel<com.iberis.protocol.Protocol.PTransaction> {
+                  val contractType: ContractProtocol.ContractType,
+                  val contract: Contract) : ProtobufModel<Protocol.PTransaction> {
 
     val transactionId: Hash = calculateHash()
 
@@ -39,7 +41,7 @@ class Transaction(val nonce: Long,
             return senderPrivateKey.signing(data)
         }
 
-        fun parseFrom(fromModel: com.iberis.protocol.Protocol.PTransaction): Transaction {
+        fun parseFrom(fromModel: Protocol.PTransaction): Transaction {
             return Transaction(
                     nonce = fromModel.nonce,
                     sender = fromModel.sender.toByteArray().decodePublicKey(),
@@ -50,22 +52,22 @@ class Transaction(val nonce: Long,
         }
 
         fun parseFrom(rawData: ByteArray): Transaction {
-            val parseFrom = com.iberis.protocol.Protocol.PTransaction.parseFrom(rawData)
+            val parseFrom = Protocol.PTransaction.parseFrom(rawData)
             return parseFrom(parseFrom)
         }
 
-        private fun parseContract(contractType: com.iberis.protocol.ContractProtocol.ContractType, rawData: ByteArray): Contract {
+        private fun parseContract(contractType: ContractProtocol.ContractType, rawData: ByteArray): Contract {
             return when (contractType) {
-                com.iberis.protocol.ContractProtocol.ContractType.BlockProduceRewardContract -> BlockProduceRewardContract.parseFrom(rawData)
-                com.iberis.protocol.ContractProtocol.ContractType.AddBlockProducerContract -> AddBlockProducerContract.parseFrom(rawData)
-                com.iberis.protocol.ContractProtocol.ContractType.TransferContract -> TransferContract.parseFrom(rawData)
+                ContractProtocol.ContractType.BlockProduceRewardContract -> BlockProduceRewardContract.parseFrom(rawData)
+                ContractProtocol.ContractType.AddBlockProducerContract -> AddBlockProducerContract.parseFrom(rawData)
+                ContractProtocol.ContractType.TransferContract -> TransferContract.parseFrom(rawData)
                 else -> throw IllegalArgumentException("not implement contractType : $contractType")
             }
         }
     }
 
-    override fun toProtobuf(): com.iberis.protocol.Protocol.PTransaction {
-        return com.iberis.protocol.Protocol.PTransaction.newBuilder()
+    override fun toProtobuf(): Protocol.PTransaction {
+        return Protocol.PTransaction.newBuilder()
                 .setNonce(nonce)
                 .setSender(ByteString.copyFrom(sender.encoded))
                 .setSignature(ByteString.copyFrom(signature))

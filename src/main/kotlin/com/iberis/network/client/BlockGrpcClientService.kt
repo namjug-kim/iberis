@@ -1,6 +1,8 @@
 package com.iberis.network.client
 
 import com.iberis.core.block.Block
+import com.iberis.protocol.Api
+import com.iberis.protocol.BlockServiceGrpc
 import com.linecorp.armeria.client.ClientBuilder
 import org.springframework.stereotype.Service
 
@@ -18,9 +20,9 @@ class BlockGrpcClientService {
     fun getBlock(height: Int): Block {
         val blockClientServiceGrpc = ClientBuilder("gproto+http://127.0.0.1:8080/")
                 .defaultResponseTimeoutMillis(10000)
-                .build(com.iberis.protocol.BlockServiceGrpc.BlockServiceBlockingStub::class.java)
+                .build(BlockServiceGrpc.BlockServiceBlockingStub::class.java)
 
-        val getBlockRequest = com.iberis.protocol.Api.BlockHeight.newBuilder().setBlockHeight(height).build()
+        val getBlockRequest = Api.BlockHeight.newBuilder().setBlockHeight(height).build()
         val protocolBlock = blockClientServiceGrpc.getBlock(getBlockRequest)
         return Block.parseFrom(protocolBlock)
     }

@@ -7,6 +7,7 @@ import com.iberis.core.contract.executor.BlockProduceRewardContractHandler
 import com.iberis.core.contract.executor.ContractHandler
 import com.iberis.crypto.decodePublicKey
 import com.iberis.db.DatabaseService
+import com.iberis.protocol.ContractProtocol
 import com.iberis.util.createAddress
 import java.security.PublicKey
 
@@ -20,14 +21,14 @@ import java.security.PublicKey
  * @version 0.1
  */
 data class BlockProduceRewardContract(val from: PublicKey,
-                                      val amount: Coin) : BaseContract(from, com.iberis.protocol.ContractProtocol.ContractType.BlockProduceRewardContract), ProtobufModel<com.iberis.protocol.ContractProtocol.PBlockProduceRewardContract> {
+                                      val amount: Coin) : BaseContract(from, ContractProtocol.ContractType.BlockProduceRewardContract), ProtobufModel<ContractProtocol.PBlockProduceRewardContract> {
     companion object {
         fun parseFrom(rawData: ByteArray): BlockProduceRewardContract {
-            val parsedData = com.iberis.protocol.ContractProtocol.PBlockProduceRewardContract.parseFrom(rawData)
+            val parsedData = ContractProtocol.PBlockProduceRewardContract.parseFrom(rawData)
             return parseFrom(parsedData)
         }
 
-        fun parseFrom(fromModel: com.iberis.protocol.ContractProtocol.PBlockProduceRewardContract): BlockProduceRewardContract {
+        fun parseFrom(fromModel: ContractProtocol.PBlockProduceRewardContract): BlockProduceRewardContract {
             return BlockProduceRewardContract(
                     from = fromModel.sender.toByteArray().decodePublicKey(),
                     amount = Coin(fromModel.amount)
@@ -43,8 +44,8 @@ data class BlockProduceRewardContract(val from: PublicKey,
         return toProtobuf().toByteArray()
     }
 
-    override fun toProtobuf(): com.iberis.protocol.ContractProtocol.PBlockProduceRewardContract {
-        return com.iberis.protocol.ContractProtocol.PBlockProduceRewardContract.newBuilder()
+    override fun toProtobuf(): ContractProtocol.PBlockProduceRewardContract {
+        return ContractProtocol.PBlockProduceRewardContract.newBuilder()
                 .setSender(ByteString.copyFrom(from.encoded))
                 .setAmount(amount.value)
                 .build()
