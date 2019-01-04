@@ -72,6 +72,10 @@ class Hash(bytes: ByteArray) {
         }
     }
 
+    override fun hashCode(): Int {
+        return hex.hashCode()
+    }
+
     override fun toString(): String {
         return this.hex
     }
