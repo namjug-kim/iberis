@@ -1,4 +1,4 @@
-package com.iberis.node.client
+package com.iberis.network.client
 
 import com.iberis.core.block.Block
 import com.linecorp.armeria.client.ClientBuilder

@@ -3,7 +3,7 @@ package com.iberis.consensus
 import com.iberis.common.logger
 import com.iberis.consensus.model.CommitBlock
 import com.iberis.core.block.Block
-import com.iberis.node.service.BroadCastService
+import com.iberis.network.service.BroadCastService
 import org.springframework.stereotype.Service
 
 /**

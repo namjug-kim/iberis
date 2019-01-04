@@ -3,7 +3,7 @@ package com.iberis.consensus
 import com.iberis.application.ApplicationProperties
 import com.iberis.core.block.BlockService
 import com.iberis.db.DatabaseService
-import com.iberis.node.client.BlockGrpcClientService
+import com.iberis.network.client.BlockGrpcClientService
 import org.springframework.stereotype.Service
 import java.time.Instant
 

@@ -1,4 +1,4 @@
-package com.iberis.node.server
+package com.iberis.network.server
 
 import com.iberis.core.block.BlockService
 import com.linecorp.armeria.common.SessionProtocol
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service
  * @version 0.1
  */
 @Service
-class ServerInitializer(val blockService: BlockService) {
+class ServerInitializer(private val blockService: BlockService) {
     fun runServer() {
         val sb = ServerBuilder()
         sb.service(GrpcServiceBuilder().addService(BlockGrpcServerService(blockService)).build())

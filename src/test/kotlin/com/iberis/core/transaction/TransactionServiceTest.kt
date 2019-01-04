@@ -6,7 +6,7 @@ import com.iberis.common.Coin
 import com.iberis.core.contract.TransferContract
 import com.iberis.core.contract.executor.ContractService
 import com.iberis.db.DatabaseService
-import com.iberis.node.service.BroadCastService
+import com.iberis.network.service.BroadCastService
 import org.junit.Assert.assertEquals
 import org.junit.Assert.fail
 import org.junit.Test

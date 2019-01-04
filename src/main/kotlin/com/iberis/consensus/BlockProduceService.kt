@@ -11,7 +11,7 @@ import com.iberis.core.transaction.Transaction
 import com.iberis.core.transaction.TransactionBuilder
 import com.iberis.core.transaction.TransactionService
 import com.iberis.db.DatabaseService
-import com.iberis.node.service.BroadCastService
+import com.iberis.network.service.BroadCastService
 import org.springframework.stereotype.Service
 import java.time.Instant
 import java.util.concurrent.atomic.AtomicLong

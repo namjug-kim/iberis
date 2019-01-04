@@ -4,7 +4,7 @@ import com.iberis.common.logger
 import com.iberis.consensus.BlockProducerService
 import com.iberis.core.block.BlockService
 import com.iberis.core.block.GenesisBlockBuilder
-import com.iberis.node.server.ServerInitializer
+import com.iberis.network.server.ServerInitializer
 import io.reactivex.Flowable
 import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Service

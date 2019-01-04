@@ -1,4 +1,4 @@
-package com.iberis.node.service
+package com.iberis.network.service
 
 import com.iberis.consensus.model.CommitBlock
 import com.iberis.core.block.Block

@@ -6,7 +6,7 @@ import com.iberis.core.block.BlockService
 import com.iberis.core.contract.AddBlockProducerContract
 import com.iberis.core.transaction.TransactionBuilder
 import com.iberis.core.transaction.TransactionService
-import com.iberis.node.client.BlockGrpcClientService
+import com.iberis.network.client.BlockGrpcClientService
 import io.reactivex.Flowable
 import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Service

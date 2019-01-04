@@ -7,7 +7,7 @@ import com.iberis.consensus.model.CommitBlock
 import com.iberis.core.block.Block
 import com.iberis.core.block.BlockService
 import com.iberis.db.DatabaseService
-import com.iberis.node.service.BroadCastService
+import com.iberis.network.service.BroadCastService
 import com.iberis.util.createAddress
 import org.springframework.stereotype.Service
 import java.time.Instant
